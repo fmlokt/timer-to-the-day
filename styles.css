@@ -1,3 +1,9 @@
+/* ──────────────────────────────────────────────────────────────
+   Boarding Pass N° 001 — You → Me
+   Midnight Departure · IBM Plex Sans Condensed + IBM Plex Mono
+   reverse-out cream on indigo · signal-orange accent
+   ────────────────────────────────────────────────────────────── */
+
 *,
 *::before,
 *::after {
@@ -11,142 +17,875 @@ body {
 }
 
 :root {
-  --bg-start: #0f1226;
-  --bg-end: #1f1147;
-  --accent: #7c5cff;
-  --text: #f5f6ff;
-  --muted: rgba(245, 246, 255, 0.68);
-  --cell-bg: rgba(255, 255, 255, 0.06);
-  --cell-border: rgba(255, 255, 255, 0.12);
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  /* Palette — Midnight Departure, Naya-black */
+  --night-0: #040405;   /* page — near-pure black, faintest warm bias */
+  --night-1: #060607;   /* minor card-shadow tier */
+  --night-2: #08080a;   /* unused but kept for consistency */
+  --card: #121625;      /* ticket face midnight indigo */
+  --card-edge: #0b0e1b; /* darker at card foot */
+  --card-hi: #181d32;   /* slight raised stub */
+  --cream: #f1e7ca;     /* reverse-out cream ink */
+  --cream-88: rgba(241, 231, 202, 0.88);
+  --cream-70: rgba(241, 231, 202, 0.70);
+  --cream-50: rgba(241, 231, 202, 0.50);
+  --cream-32: rgba(241, 231, 202, 0.32);
+  --cream-18: rgba(241, 231, 202, 0.18);
+  --line: rgba(241, 231, 202, 0.22);
+  --line-soft: rgba(241, 231, 202, 0.10);
+  --signal: #4fc8ea;        /* topaz / sky blue — runway edge light */
+  --signal-bright: #8ee0f5; /* lighter flash */
+  --signal-glow: rgba(79, 200, 234, 0.55);
+
+  --mono:
+    "IBM Plex Mono", ui-monospace, "SFMono-Regular", "JetBrains Mono",
+    Consolas, monospace;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.15, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+
+  --ticket-pad-x: 1.55rem;
+  --ticket-pad-y: 1.75rem;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--night-0);
+}
+
+html {
+  background: var(--night-0);
 }
 
 body {
   min-height: 100vh;
   min-height: 100dvh;
+  background: var(--night-0);
+  color: var(--cream);
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  font-feature-settings: "kern" on, "ss01" on;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Screen-reader-only heading */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ────────── PAGE / STAGE ────────── */
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.25rem;
-  color: var(--text);
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
-    Cantarell, "Helvetica Neue", Arial, sans-serif;
-  background:
-    radial-gradient(
-      1200px 600px at 80% -10%,
-      rgba(124, 92, 255, 0.35),
-      transparent 60%
-    ),
-    radial-gradient(
-      900px 500px at -10% 110%,
-      rgba(255, 110, 196, 0.25),
-      transparent 60%
-    ),
-    linear-gradient(160deg, var(--bg-start), var(--bg-end));
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: clamp(1rem, 3.5vw, 3rem) clamp(0.75rem, 3vw, 2.5rem);
 }
 
-.page {
+/* ────────── TICKET CARD ────────── */
+.ticket {
+  position: relative;
   width: 100%;
-  max-width: 880px;
-  text-align: center;
+  max-width: 23rem;
+  background:
+    /* gentle top highlight */
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
+    /* vertical ink gradient */
+    linear-gradient(180deg, var(--card) 0%, var(--card-edge) 100%);
+  border-radius: 0.6rem;
+  padding: var(--ticket-pad-y) var(--ticket-pad-x);
+  box-shadow:
+    /* top crisp edge */
+    inset 0 1px 0 rgba(241, 231, 202, 0.07),
+    /* bottom lip */
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+    /* hairline card border */
+    0 0 0 1px rgba(241, 231, 202, 0.08),
+    /* sharp contact shadow */
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    /* long shadow — absorbed into the true black page */
+    0 28px 56px -22px rgba(0, 0, 0, 0.85),
+    0 70px 140px -40px rgba(0, 0, 0, 0.7);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "main"
+    "perf"
+    "stub";
+  gap: 0;
+  isolation: isolate;
 }
 
-.intro {
-  margin-bottom: 1.75rem;
+/* Corner printer's crop marks — L-shapes at 4 corners */
+.ticket::before,
+.ticket::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+}
+.ticket::before {
+  top: 9px;
+  left: 9px;
+  border-top: 1px solid var(--cream-32);
+  border-left: 1px solid var(--cream-32);
+}
+.ticket::after {
+  bottom: 9px;
+  right: 9px;
+  border-bottom: 1px solid var(--cream-32);
+  border-right: 1px solid var(--cream-32);
 }
 
-.eyebrow {
-  margin: 0 0 0.5rem;
-  font-size: 0.85rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.target {
-  margin: 0;
-  font-size: clamp(1.5rem, 5.5vw, 2.5rem);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.tz {
-  margin: 0.35rem 0 0;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-.countdown {
+.ticket__main {
+  grid-area: main;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: clamp(1.1rem, 3.5vw, 1.45rem);
+  padding-bottom: 1.5rem;
+  position: relative;
+}
+
+.ticket__stub {
+  grid-area: stub;
+  padding-top: 1.45rem;
+  position: relative;
+}
+
+/* ────────── DASHED RULES ──────────
+   The rule is a 0-height flex child that holds a single
+   absolutely-positioned pseudo. The pseudo has an explicit
+   width of `cell-width + 2·pad-x = ticket-outer`, anchored
+   with a single `left: -pad-x`. This avoids relying on
+   flex-stretch + negative-margin bleed, which was letting
+   the dashes spill past the ticket's border. */
+.ticket__rule {
+  position: relative;
+  height: 0;
+  margin: 0.1rem 0;
+}
+.ticket__rule::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(var(--ticket-pad-x) * -1);
+  width: calc(100% + var(--ticket-pad-x) * 2);
+  height: 0;
+  border-top: 1px dashed var(--line);
+}
+
+/* ────────── HEADER ────────── */
+.ticket__header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
   gap: 0.75rem;
+  margin: 0;
+}
+
+.ticket__edition,
+.ticket__serial {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.63rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--cream-50);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.ticket__serial {
+  justify-self: end;
+}
+
+.ticket__kind {
+  margin: 0;
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+/* Blinking live status dot before "Boarding Pass" */
+.ticket__kind::before {
+  content: "";
+  display: inline-block;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow:
+    0 0 0 1px rgba(79, 200, 234, 0.25),
+    0 0 8px var(--signal-glow),
+    0 0 16px rgba(79, 200, 234, 0.3);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(0.82);
+  }
+}
+
+/* ────────── ROUTE ────────── */
+.ticket__route {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.9rem;
+  align-items: end;
+  padding: 0.3rem 0 0.2rem;
+}
+
+.ticket__city {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0.45rem;
+}
+
+.ticket__city--to {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.ticket__city-label {
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--cream-50);
+}
+
+.ticket__city-code {
+  font-family: var(--mono);
+  font-size: clamp(3rem, 14vw, 5rem);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.06em;
+  color: var(--cream);
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.ticket__city-sub {
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--cream-50);
+  line-height: 1.35;
+  max-width: 9rem;
+}
+
+.ticket__city--to .ticket__city-sub {
+  text-align: right;
+}
+
+/* ────────── ARROW — glowing topaz signal ────────── */
+.ticket__arrow {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-}
-
-.cell {
-  flex: 1 1 calc(50% - 0.75rem);
-  min-width: 7.25rem;
-  padding: 1.1rem 0.75rem 0.9rem;
-  background: var(--cell-bg);
-  border: 1px solid var(--cell-border);
-  border-radius: 1rem;
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
-
-.num {
-  display: block;
-  font-size: clamp(2.5rem, 11vw, 4.75rem);
-  font-weight: 700;
+  align-self: center;
+  font-family: var(--mono);
+  font-size: clamp(2rem, 6vw, 2.6rem);
+  font-weight: 300;
+  color: var(--signal);
   line-height: 1;
+  padding: 0;
+  text-shadow:
+    0 0 10px var(--signal-glow),
+    0 0 20px rgba(79, 200, 234, 0.35);
+  user-select: none;
+}
+
+/* ────────── COUNTDOWN ────────── */
+.ticket__countdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.2rem 0 0.1rem;
+}
+
+.ticket__count-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  color: var(--cream-70);
+}
+
+.ticket__count-meta {
+  color: var(--cream-32);
+  font-size: 0.54rem;
+  letter-spacing: 0.18em;
+}
+
+.ticket__count-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.25rem 0.65rem;
+  align-items: baseline;
+}
+
+.ticket__count-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  position: relative;
+}
+
+/* Vertical hairline separators between cells — feels like a flight manifest */
+.ticket__count-cell + .ticket__count-cell::before {
+  content: "";
+  position: absolute;
+  top: 0.1rem;
+  bottom: 1.2rem;
+  left: -0.34rem;
+  width: 0;
+  border-left: 1px dashed var(--line-soft);
+}
+
+.ticket__count-num {
+  font-family: var(--mono);
+  font-size: clamp(2.6rem, 12.5vw, 3.85rem);
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
+  letter-spacing: -0.06em;
+  line-height: 0.94;
+  color: var(--cream);
+  display: inline-block;
+  transform: translateZ(0);
 }
 
-.label {
-  display: block;
-  margin-top: 0.5rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
+.ticket__count-num.is-tick {
+  animation: tick 0.5s var(--ease-soft);
+}
+
+@keyframes tick {
+  0% {
+    color: var(--signal-bright);
+    text-shadow: 0 0 12px var(--signal-glow);
+  }
+  55% {
+    color: var(--signal-bright);
+    text-shadow: 0 0 8px rgba(79, 200, 234, 0.35);
+  }
+  100% {
+    color: var(--cream);
+    text-shadow: none;
+  }
+}
+
+.ticket__count-unit {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  font-weight: 400;
   text-transform: uppercase;
-  color: var(--muted);
+  letter-spacing: 0.22em;
+  color: var(--cream-50);
+  margin-top: 0.55rem;
 }
 
-.status {
-  margin-top: 1.5rem;
-  min-height: 1.25rem;
-  font-size: 0.95rem;
-  color: var(--muted);
-}
-
-.status.done {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-@media (min-width: 640px) {
-  .countdown {
-    gap: 1rem;
-    flex-wrap: nowrap;
+/* Very narrow screens: 2×2 countdown */
+@media (max-width: 380px) {
+  .ticket__count-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 1rem;
   }
-
-  .cell {
-    flex: 1 1 0;
-    padding: 1.5rem 1rem 1.25rem;
+  .ticket__count-num {
+    font-size: clamp(2.8rem, 17vw, 4rem);
   }
-
-  .intro {
-    margin-bottom: 2.25rem;
+  .ticket__count-cell:nth-child(3)::before {
+    display: none;
   }
 }
 
+/* ────────── BARCODE — reverse-out cream stripes ────────── */
+.ticket__barcode {
+  height: 2.4rem;
+  margin: 0.35rem 0 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--cream) 0 2px,
+    transparent 2px 4px,
+    var(--cream) 4px 5px,
+    transparent 5px 9px,
+    var(--cream) 9px 11px,
+    transparent 11px 12px,
+    var(--cream) 12px 13px,
+    transparent 13px 17px,
+    var(--cream) 17px 20px,
+    transparent 20px 21px,
+    var(--cream) 21px 23px,
+    transparent 23px 27px
+  );
+  background-size: 27px 100%;
+  background-repeat: repeat-x;
+  opacity: 0.92;
+  filter: drop-shadow(0 0 4px rgba(241, 231, 202, 0.08));
+}
+
+.ticket__barcode--mini {
+  height: 1.6rem;
+  margin-top: 0.9rem;
+  opacity: 0.85;
+}
+
+/* ────────── PERFORATION ──────────
+   The perf is a 0-height grid item. A child `.ticket__perf-line`
+   is absolutely positioned with a single `left: -pad-x` anchor
+   and an explicit `width: 100% + 2·pad-x`, which gives it a
+   deterministic computed width of exactly `ticket-outer`. The
+   two cutout dots are pseudos of that line element, anchored
+   with `left: 0` / `right: 0` so both sides avoid any `100%`
+   subpixel rounding. */
+.ticket__perf {
+  grid-area: perf;
+  position: relative;
+  height: 0;
+}
+
+.ticket__perf-line {
+  position: absolute;
+  top: 0;
+  left: calc(var(--ticket-pad-x) * -1);
+  width: calc(100% + var(--ticket-pad-x) * 2);
+  height: 0;
+  border-top: 1.5px dashed var(--line);
+}
+
+.ticket__perf-line::before,
+.ticket__perf-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 1.3rem;
+  height: 1.3rem;
+  background: var(--night-0);
+  border-radius: 50%;
+}
+
+.ticket__perf-line::before {
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+.ticket__perf-line::after {
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+/* ────────── STUB ────────── */
+.ticket__stub-eyebrow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 0.95rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  color: var(--cream-50);
+}
+
+.ticket__fields {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem 1rem;
+}
+
+.ticket__field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  position: relative;
+}
+
+.ticket__field dt {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--cream-50);
+  margin-bottom: 0.32rem;
+}
+
+.ticket__field dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.05;
+}
+
+.ticket__field-unit {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--cream-50);
+  margin-left: 0.2rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* ────────── DESKTOP — LANDSCAPE TICKET ────────── */
+@media (min-width: 820px) {
+  :root {
+    --ticket-pad-x: 2.6rem;
+    --ticket-pad-y: 2.35rem;
+  }
+
+  .page {
+    padding: clamp(2rem, 4vw, 4rem);
+  }
+
+  .ticket {
+    max-width: 58rem;
+    border-radius: 0.75rem;
+    grid-template-columns: minmax(0, 2.35fr) 0 minmax(0, 1fr);
+    grid-template-areas: "main perf stub";
+    column-gap: 2.75rem;
+    min-height: 23rem;
+  }
+
+  .ticket::before {
+    top: 14px;
+    left: 14px;
+    width: 12px;
+    height: 12px;
+  }
+  .ticket::after {
+    bottom: 14px;
+    right: 14px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .ticket__main {
+    padding-bottom: 0;
+    gap: clamp(1.1rem, 1.8vw, 1.65rem);
+  }
+
+  /* Desktop: the main-column rules bleed only to the LEFT edge
+     of the ticket and stop at the perforation column gap. */
+  .ticket__rule::before {
+    left: calc(var(--ticket-pad-x) * -1);
+    width: calc(100% + var(--ticket-pad-x));
+  }
+
+  .ticket__stub {
+    padding-top: 0;
+    padding-left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* Perforation becomes vertical */
+  .ticket__perf {
+    height: auto;
+    width: 0;
+    align-self: stretch;
+  }
+
+  .ticket__perf-line {
+    top: calc(var(--ticket-pad-y) * -1);
+    left: 0;
+    width: 0;
+    height: calc(100% + var(--ticket-pad-y) * 2);
+    border-top: none;
+    border-left: 1.5px dashed var(--line);
+  }
+
+  .ticket__perf-line::before {
+    top: 0;
+    left: 0;
+    right: auto;
+    transform: translate(-50%, -50%);
+  }
+  .ticket__perf-line::after {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    transform: translate(-50%, 50%);
+  }
+
+  .ticket__route {
+    gap: 1.75rem;
+    align-items: end;
+  }
+
+  .ticket__city-code {
+    font-size: clamp(3.5rem, 7vw, 5.5rem);
+  }
+
+  .ticket__arrow {
+    font-size: clamp(2.6rem, 4.5vw, 3.4rem);
+  }
+
+  .ticket__city-sub {
+    max-width: 11rem;
+  }
+
+  .ticket__count-num {
+    font-size: clamp(3.25rem, 7vw, 5rem);
+  }
+
+  .ticket__count-grid {
+    gap: 0.25rem 1.5rem;
+  }
+
+  .ticket__count-cell + .ticket__count-cell::before {
+    left: -0.78rem;
+  }
+
+  .ticket__barcode {
+    height: 2.7rem;
+    margin-top: 0.5rem;
+  }
+
+  .ticket__barcode--mini {
+    height: 2rem;
+    margin-top: auto;
+  }
+
+  /* Stub becomes a 2-col compact grid */
+  .ticket__fields {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem 0.75rem;
+  }
+
+  .ticket__field dd {
+    font-size: 0.98rem;
+  }
+}
+
+/* Extra-wide — slightly more generous */
+@media (min-width: 1200px) {
+  .ticket {
+    max-width: 64rem;
+    min-height: 25rem;
+  }
+}
+
+/* ────────── ANIMATED FILM GRAIN — Naya-style ──────────
+   Two stacked grain layers: a fine high-freq layer for texture
+   and a coarser low-freq layer for visible drift. Both reverse
+   out against the near-pure black page so the grain reads as
+   light speckling on a true black void. */
+.grain {
+  position: fixed;
+  inset: -120%;
+  width: 340%;
+  height: 340%;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.28;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.35' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='1.15' intercept='-0.08'/></feComponentTransfer></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+  animation: grain 0.72s steps(6) infinite;
+  will-change: transform;
+}
+
+/* Second grain pass — coarser, visibly drifting */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  animation: grain 1.4s steps(8) infinite reverse;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-3%, -4%); }
+  20% { transform: translate(-6%, 4%); }
+  30% { transform: translate(5%, -7%); }
+  40% { transform: translate(-2%, 6%); }
+  50% { transform: translate(-8%, 2%); }
+  60% { transform: translate(6%, -1%); }
+  70% { transform: translate(-4%, -5%); }
+  80% { transform: translate(4%, 8%); }
+  90% { transform: translate(-7%, 3%); }
+}
+
+/* ────────── PAGE-LOAD REVEAL ────────── */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.9rem);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes reveal-wide {
+  from {
+    opacity: 0;
+    letter-spacing: 0.12em;
+    filter: blur(14px);
+  }
+  to {
+    opacity: 1;
+    letter-spacing: -0.045em;
+    filter: blur(0);
+  }
+}
+
+.ticket {
+  animation: reveal 1s var(--ease) both;
+  animation-delay: 0s;
+}
+
+.ticket__header,
+.ticket__city--from,
+.ticket__arrow,
+.ticket__city--to,
+.ticket__count-label,
+.ticket__count-cell,
+.ticket__barcode,
+.ticket__stub-eyebrow,
+.ticket__field,
+.ticket__barcode--mini {
+  animation: reveal 1.15s var(--ease) both;
+}
+
+/* Huge codes animate with letter-spacing collapse — more cinematic */
+.ticket__city--from .ticket__city-code,
+.ticket__city--to .ticket__city-code {
+  animation: reveal-wide 1.4s var(--ease) both;
+}
+
+.ticket__header {
+  animation-delay: 0.15s;
+}
+.ticket__city--from {
+  animation-delay: 0.28s;
+}
+.ticket__city--from .ticket__city-code {
+  animation-delay: 0.34s;
+}
+.ticket__arrow {
+  animation-delay: 0.46s;
+}
+.ticket__city--to {
+  animation-delay: 0.42s;
+}
+.ticket__city--to .ticket__city-code {
+  animation-delay: 0.48s;
+}
+.ticket__count-label {
+  animation-delay: 0.7s;
+}
+.ticket__count-cell:nth-child(1) {
+  animation-delay: 0.78s;
+}
+.ticket__count-cell:nth-child(2) {
+  animation-delay: 0.86s;
+}
+.ticket__count-cell:nth-child(3) {
+  animation-delay: 0.94s;
+}
+.ticket__count-cell:nth-child(4) {
+  animation-delay: 1.02s;
+}
+.ticket__barcode {
+  animation-delay: 1.16s;
+}
+.ticket__stub-eyebrow {
+  animation-delay: 0.26s;
+}
+.ticket__field:nth-of-type(1) {
+  animation-delay: 0.34s;
+}
+.ticket__field:nth-of-type(2) {
+  animation-delay: 0.4s;
+}
+.ticket__field:nth-of-type(3) {
+  animation-delay: 0.46s;
+}
+.ticket__field:nth-of-type(4) {
+  animation-delay: 0.52s;
+}
+.ticket__field:nth-of-type(5) {
+  animation-delay: 0.58s;
+}
+.ticket__barcode--mini {
+  animation-delay: 0.72s;
+}
+
+/* ────────── REDUCED MOTION ────────── */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .grain {
+    animation: none;
+    transform: none;
+  }
+  .ticket__kind::before,
+  .page::after {
+    animation: none;
   }
 }
