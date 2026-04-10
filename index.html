@@ -3,45 +3,135 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Live countdown to 20 May 2026, 23:55 (UTC+8)." />
-    <meta name="theme-color" content="#0f1226" />
-    <title>Countdown to 20 May 2026</title>
+    <meta
+      name="description"
+      content="Boarding pass countdown to departure — 20 May 2026, 23:55 Singapore time."
+    />
+    <meta name="theme-color" content="#07090F" />
+    <title>Boarding Pass N° 001 — You → Me · 20 May 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <h1 class="sr-only">Countdown to boarding — 20 May 2026, 23:55 Singapore time</h1>
+
     <main class="page">
-      <header class="intro">
-        <p class="eyebrow">Counting down to</p>
-        <h1 class="target">20 May 2026 &middot; 23:55</h1>
-        <p class="tz">UTC+8</p>
-      </header>
-
-      <section
-        class="countdown"
-        aria-label="Time remaining until 20 May 2026 23:55 UTC+8"
+      <article
+        class="ticket"
+        aria-label="Boarding pass countdown until twenty May twenty twenty-six"
       >
-        <div class="cell">
-          <span class="num" id="days" aria-live="off">--</span>
-          <span class="label">Days</span>
-        </div>
-        <div class="cell">
-          <span class="num" id="hours" aria-live="off">--</span>
-          <span class="label">Hours</span>
-        </div>
-        <div class="cell">
-          <span class="num" id="minutes" aria-live="off">--</span>
-          <span class="label">Minutes</span>
-        </div>
-        <div class="cell">
-          <span class="num" id="seconds" aria-live="off">--</span>
-          <span class="label">Seconds</span>
-        </div>
-      </section>
+        <section class="ticket__main">
+          <header class="ticket__header">
+            <p class="ticket__edition">N° 001</p>
+            <p class="ticket__kind">Boarding Pass</p>
+            <p class="ticket__serial">2026 &middot; 05 &middot; 20</p>
+          </header>
 
-      <footer class="status" id="status" role="status" aria-live="polite">
-        &nbsp;
-      </footer>
+          <div class="ticket__rule" aria-hidden="true"></div>
+
+          <div class="ticket__route">
+            <div class="ticket__city">
+              <span class="ticket__city-label">From</span>
+              <span class="ticket__city-code">YOU</span>
+              <span class="ticket__city-sub">far far away :(</span>
+            </div>
+            <span class="ticket__arrow" aria-hidden="true">&rarr;</span>
+            <div class="ticket__city ticket__city--to">
+              <span class="ticket__city-label">To</span>
+              <span class="ticket__city-code">ME</span>
+              <span class="ticket__city-sub">Right here, waiting</span>
+            </div>
+          </div>
+
+          <div class="ticket__rule" aria-hidden="true"></div>
+
+          <section
+            class="ticket__countdown"
+            aria-label="Time until departure"
+          >
+            <p class="ticket__count-label">
+              <span>Time to arrival</span>
+              <span class="ticket__count-meta">dd : hh : mm : ss</span>
+            </p>
+            <div class="ticket__count-grid">
+              <div class="ticket__count-cell">
+                <span class="ticket__count-num" id="days" aria-live="off"
+                  >—</span
+                >
+                <span class="ticket__count-unit">Days</span>
+              </div>
+              <div class="ticket__count-cell">
+                <span class="ticket__count-num" id="hours" aria-live="off"
+                  >—</span
+                >
+                <span class="ticket__count-unit">Hrs</span>
+              </div>
+              <div class="ticket__count-cell">
+                <span class="ticket__count-num" id="minutes" aria-live="off"
+                  >—</span
+                >
+                <span class="ticket__count-unit">Min</span>
+              </div>
+              <div class="ticket__count-cell">
+                <span class="ticket__count-num" id="seconds" aria-live="off"
+                  >—</span
+                >
+                <span class="ticket__count-unit">Sec</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="ticket__barcode" aria-hidden="true"></div>
+
+        </section>
+
+        <div class="ticket__perf" aria-hidden="true">
+          <span class="ticket__perf-line"></span>
+        </div>
+
+        <aside class="ticket__stub" aria-label="Ticket stub">
+          <p class="ticket__stub-eyebrow">
+            <span>Stub</span>
+            <span>N° 001</span>
+          </p>
+
+          <dl class="ticket__fields">
+            <div class="ticket__field">
+              <dt>Flight</dt>
+              <dd>N° 001</dd>
+            </div>
+            <div class="ticket__field">
+              <dt>Date</dt>
+              <dd>19 May 26</dd>
+            </div>
+            <div class="ticket__field">
+              <dt>Depart</dt>
+              <dd>20:25 <span class="ticket__field-unit"></span></dd>
+            </div>
+            <div class="ticket__field">
+              <dt>Gate</dt>
+              <dd>A1</dd>
+            </div>
+            <div class="ticket__field">
+              <dt>Seat</dt>
+              <dd>01A</dd>
+            </div>
+          </dl>
+
+          <div
+            class="ticket__barcode ticket__barcode--mini"
+            aria-hidden="true"
+          ></div>
+        </aside>
+      </article>
     </main>
+
+    <div class="grain" aria-hidden="true"></div>
 
     <script src="script.js"></script>
   </body>
