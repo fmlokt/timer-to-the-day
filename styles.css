@@ -185,7 +185,7 @@ body {
   position: absolute;
   top: 0;
   left: calc(var(--ticket-pad-x) * -1);
-  width: calc(100% + var(--ticket-pad-x) * 2);
+  width: calc(100% + var(--ticket-pad-x) * 1.5);
   height: 0;
   border-top: 1px dashed var(--line);
 }
@@ -511,7 +511,7 @@ body {
   transform: translate(-50%, -50%);
 }
 .ticket__perf-line::after {
-  right: 0;
+  right: 10px;
   transform: translate(50%, -50%);
 }
 
