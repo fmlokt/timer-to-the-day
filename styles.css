@@ -1,0 +1,152 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-start: #0f1226;
+  --bg-end: #1f1147;
+  --accent: #7c5cff;
+  --text: #f5f6ff;
+  --muted: rgba(245, 246, 255, 0.68);
+  --cell-bg: rgba(255, 255, 255, 0.06);
+  --cell-border: rgba(255, 255, 255, 0.12);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  color: var(--text);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    Cantarell, "Helvetica Neue", Arial, sans-serif;
+  background:
+    radial-gradient(
+      1200px 600px at 80% -10%,
+      rgba(124, 92, 255, 0.35),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at -10% 110%,
+      rgba(255, 110, 196, 0.25),
+      transparent 60%
+    ),
+    linear-gradient(160deg, var(--bg-start), var(--bg-end));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page {
+  width: 100%;
+  max-width: 880px;
+  text-align: center;
+}
+
+.intro {
+  margin-bottom: 1.75rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.target {
+  margin: 0;
+  font-size: clamp(1.5rem, 5.5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.tz {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.countdown {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.cell {
+  flex: 1 1 calc(50% - 0.75rem);
+  min-width: 7.25rem;
+  padding: 1.1rem 0.75rem 0.9rem;
+  background: var(--cell-bg);
+  border: 1px solid var(--cell-border);
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.num {
+  display: block;
+  font-size: clamp(2.5rem, 11vw, 4.75rem);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.label {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.status {
+  margin-top: 1.5rem;
+  min-height: 1.25rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.status.done {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@media (min-width: 640px) {
+  .countdown {
+    gap: 1rem;
+    flex-wrap: nowrap;
+  }
+
+  .cell {
+    flex: 1 1 0;
+    padding: 1.5rem 1rem 1.25rem;
+  }
+
+  .intro {
+    margin-bottom: 2.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Live countdown to 20 May 2026, 23:55 (UTC+8)." />
+    <meta name="theme-color" content="#0f1226" />
+    <title>Countdown to 20 May 2026</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="intro">
+        <p class="eyebrow">Counting down to</p>
+        <h1 class="target">20 May 2026 &middot; 23:55</h1>
+        <p class="tz">UTC+8</p>
+      </header>
+
+      <section
+        class="countdown"
+        aria-label="Time remaining until 20 May 2026 23:55 UTC+8"
+      >
+        <div class="cell">
+          <span class="num" id="days" aria-live="off">--</span>
+          <span class="label">Days</span>
+        </div>
+        <div class="cell">
+          <span class="num" id="hours" aria-live="off">--</span>
+          <span class="label">Hours</span>
+        </div>
+        <div class="cell">
+          <span class="num" id="minutes" aria-live="off">--</span>
+          <span class="label">Minutes</span>
+        </div>
+        <div class="cell">
+          <span class="num" id="seconds" aria-live="off">--</span>
+          <span class="label">Seconds</span>
+        </div>
+      </section>
+
+      <footer class="status" id="status" role="status" aria-live="polite">
+        &nbsp;
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
