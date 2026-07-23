@@ -1,8 +1,8 @@
 (function () {
   "use strict";
 
-  // Target: 20 May 2026, 23:55 (UTC+8) — a fixed instant.
-  var TARGET = new Date("2026-05-20T23:55:00+08:00").getTime();
+  // Target: 18 Sep 2026, 00:00 (UTC+8) — a fixed instant.
+  var TARGET = new Date("2026-09-18T00:00:00+08:00").getTime();
 
   var MS_PER_SECOND = 1000;
   var MS_PER_MINUTE = 60 * MS_PER_SECOND;
@@ -21,7 +21,6 @@
       hours: document.getElementById("hours"),
       minutes: document.getElementById("minutes"),
       seconds: document.getElementById("seconds"),
-      status: document.getElementById("status"),
     };
 
     var previous = { days: "", hours: "", minutes: "", seconds: "" };
@@ -43,14 +42,10 @@
       var diff = TARGET - Date.now();
 
       if (diff <= 0) {
-        setCell("days", "000");
+        setCell("days", "00");
         setCell("hours", "00");
         setCell("minutes", "00");
         setCell("seconds", "00");
-        if (els.status) {
-          els.status.textContent = "— The moment has arrived.";
-          els.status.classList.add("is-done");
-        }
         if (timer !== null) {
           clearInterval(timer);
           timer = null;
