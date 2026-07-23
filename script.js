@@ -19,11 +19,9 @@
     var els = {
       days: document.getElementById("days"),
       hours: document.getElementById("hours"),
-      minutes: document.getElementById("minutes"),
-      seconds: document.getElementById("seconds"),
     };
 
-    var previous = { days: "", hours: "", minutes: "", seconds: "" };
+    var previous = { days: "", hours: "" };
     var timer = null;
 
     function setCell(key, value) {
@@ -44,8 +42,6 @@
       if (diff <= 0) {
         setCell("days", "00");
         setCell("hours", "00");
-        setCell("minutes", "00");
-        setCell("seconds", "00");
         if (timer !== null) {
           clearInterval(timer);
           timer = null;
@@ -55,17 +51,15 @@
 
       var days = Math.floor(diff / MS_PER_DAY);
       var hours = Math.floor((diff % MS_PER_DAY) / MS_PER_HOUR);
-      var minutes = Math.floor((diff % MS_PER_HOUR) / MS_PER_MINUTE);
-      var seconds = Math.floor((diff % MS_PER_MINUTE) / MS_PER_SECOND);
 
       setCell("days", pad(days, days >= 100 ? 3 : 2));
       setCell("hours", pad(hours, 2));
-      setCell("minutes", pad(minutes, 2));
-      setCell("seconds", pad(seconds, 2));
     }
 
     update();
-    timer = setInterval(update, 250);
+    // Hours is the finest unit shown; a 15s cadence keeps the hour
+    // boundary crisp without needless work.
+    timer = setInterval(update, 15000);
   }
 
   if (document.readyState === "loading") {
