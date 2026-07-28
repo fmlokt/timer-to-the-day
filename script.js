@@ -8,6 +8,7 @@
   var MS_PER_MINUTE = 60 * MS_PER_SECOND;
   var MS_PER_HOUR = 60 * MS_PER_MINUTE;
   var MS_PER_DAY = 24 * MS_PER_HOUR;
+  var MS_PER_WEEK = 7 * MS_PER_DAY;
 
   function pad(n, width) {
     var s = String(Math.max(0, n | 0));
@@ -17,11 +18,11 @@
 
   function init() {
     var els = {
-      days: document.getElementById("days"),
+      weeks: document.getElementById("weeks"),
       hours: document.getElementById("hours"),
     };
 
-    var previous = { days: "", hours: "" };
+    var previous = { weeks: "", hours: "" };
     var timer = null;
 
     function setCell(key, value) {
@@ -40,7 +41,7 @@
       var diff = TARGET - Date.now();
 
       if (diff <= 0) {
-        setCell("days", "00");
+        setCell("weeks", "00");
         setCell("hours", "00");
         if (timer !== null) {
           clearInterval(timer);
@@ -49,10 +50,12 @@
         return;
       }
 
-      var days = Math.floor(diff / MS_PER_DAY);
-      var hours = Math.floor((diff % MS_PER_DAY) / MS_PER_HOUR);
+      // Whole weeks, then the remaining hours within that partial week
+      // (0–167).
+      var weeks = Math.floor(diff / MS_PER_WEEK);
+      var hours = Math.floor((diff % MS_PER_WEEK) / MS_PER_HOUR);
 
-      setCell("days", pad(days, days >= 100 ? 3 : 2));
+      setCell("weeks", pad(weeks, 2));
       setCell("hours", pad(hours, 2));
     }
 

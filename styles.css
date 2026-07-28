@@ -74,15 +74,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(1.25rem, 5vw, 3rem);
+  padding: clamp(1rem, 3vw, 2.5rem);
 }
 
-/* ────────── COUNTDOWN ────────── */
+/* ────────── COUNTDOWN ──────────
+   Big, viewport-filling like the FEDOR LOKTEV wordmark.
+   Horizontal on desktop; stacked vertical on mobile. */
 .count {
   display: flex;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
   justify-content: center;
-  gap: clamp(1.1rem, 5vw, 3.25rem);
+  gap: clamp(1.5rem, 6vw, 5.5rem);
+  width: 100%;
 }
 
 .count__cell {
@@ -94,17 +98,19 @@ body {
 
 .count__num {
   font-family: var(--sans);
-  font-size: clamp(3.25rem, 16vw, 8.5rem);
+  /* fill the majority of the viewport, capped by height so two
+     digits never overflow vertically */
+  font-size: clamp(4rem, min(25vw, 62vh), 24rem);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
-  letter-spacing: -0.04em;
-  line-height: 0.86;
+  letter-spacing: -0.05em;
+  line-height: 0.82;
   display: inline-block;
   transform: translateZ(0);
 }
 
-/* Two-tone, alternating like the FEDOR LOKTEV mark */
+/* Two-tone, like the two-line FEDOR / LOKTEV mark */
 .count__cell--blue .count__num {
   color: var(--blue);
 }
@@ -113,39 +119,43 @@ body {
 }
 
 .count__unit {
-  margin-top: clamp(0.65rem, 1.8vw, 1.15rem);
+  margin-top: clamp(0.6rem, 1.6vw, 1.5rem);
   font-family: var(--sans);
-  font-size: clamp(0.55rem, 1.5vw, 0.78rem);
+  font-size: clamp(0.6rem, 1.4vw, 1rem);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.34em;
   /* nudge to optically center against the tracked letters */
-  text-indent: 0.3em;
+  text-indent: 0.34em;
   color: var(--ink);
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
-/* Subtle tick — a brief deepen, in keeping with the flat aesthetic */
+/* Subtle tick — a brief lift, in keeping with the flat aesthetic */
 .count__num.is-tick {
   animation: tick 0.5s var(--ease-soft);
 }
 
 @keyframes tick {
   0% {
-    transform: translateZ(0) scale(1.05);
+    transform: translateZ(0) scale(1.04);
   }
   100% {
     transform: translateZ(0) scale(1);
   }
 }
 
-/* Narrow screens: keep the two groups side by side, scale to fit */
-@media (max-width: 460px) {
+/* Mobile: stack the two units vertically, each filling the width */
+@media (max-width: 760px) {
   .count {
-    gap: clamp(1.5rem, 9vw, 2.5rem);
+    flex-direction: column;
+    gap: clamp(1.5rem, 5vh, 3.5rem);
   }
   .count__num {
-    font-size: clamp(3.6rem, 30vw, 7rem);
+    font-size: min(44vw, 32vh);
+  }
+  .count__unit {
+    font-size: clamp(0.7rem, 3.4vw, 1.05rem);
   }
 }
 
